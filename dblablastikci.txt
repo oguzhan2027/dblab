@@ -1,53 +1,54 @@
 create table urunkategori(
-	kategoriid int primary key not null,--serial ekle
+	kategoriid serial primary key not null,--serial ekle
 	kategoriadi varchar(30),
 	ketegoriyegiristarihi int
 )
 create table urun(
-	urunid int primary key not null,--serial ekle
+	urunid serial primary key not null,--serial ekle
 	kategoriid int references urunkategori(kategoriid),
 	urunadi varchar(50),
+	olcu varchar(50),
 	stok int,
 	fiyat int
 )
 create table personel(
-	personelid int primary key not null,--serial ekle
+	personelid int primary key not null,--serial eklemedik tarihe göre atadık
 	personeladi varchar(20),
 	personelsoyadi varchar(20),
 	personeltlf int,
 	personeladres varchar(200)
 )
 create table musteri(
-	musteriid int primary key not null,
+	musteriid serial primary key not null,
 	musteriadi varchar(20),
 	musterisoyadi varchar(20),
 	musteritlf int,
 	musteriadres varchar(200)
 )
 create table satis(
-	satisid int primary key not null,
+	satisid serial primary key not null,
 	musteriid int references musteri(musteriid),
 	personelid int references personel(personelid)
 )
 create table sepet(
-	sepetid int primary key not null,
+	sepetid serial primary key not null,
 	urunid int references urun(urunid),
 	sepetadi varchar(20)
 )
 create table sepetdetay(
-	sepetdetayid int primary key not null,
+	sepetdetayid serial primary key not null,
 	sepetid int references sepet(sepetid),
 	sepeteekleme boolean,
 	sepettencikarma boolean
 )
 create table personeldetay(
-	personeldetayid int primary key not null,
+	personeldetayid serial primary key not null,
 	personelid int references personel(personelid),
 	vardiya varchar(5),
 	satissayisi int
 )
 create table satisdetay(
-	satisdetayid int primary key not null,
+	satisdetayid serial primary key not null,
 	urunid int references urun(urunid),
 	personelid int references personel(personelid),
 	satisid int references satis(satisid),
@@ -55,12 +56,7 @@ create table satisdetay(
 	satistarihi varchar(5)	
 )
 create table yonetici(
-	yoneticiid int primary key not null,
-	kategoriid int references urunkategori(kategoriid),
-	satisdetayid int references satisdetay(satisdetayid),
-	satisid int references satis(satisid),
-	personelid int references personel(personelid),
-	personeldetayid int references personeldetay(personeldetayid),
+	yoneticiid serial primary key not null,
 	yoneticiadi varchar(20),
 	yoneticisoyadi varchar(20),
 	yoneticitlf int,
@@ -86,40 +82,40 @@ insert into urunkategori values(5,'Motorsiklet',2020)
 insert into urunkategori values(6,'Kriko',2020)
 
 --urun------------------------
-insert into urun values(1,1,'İceways2',24,815)
-insert into urun values(2,1,'Snowways4',12,763)
-insert into urun values(3,1,'Driveways',40,857)
-insert into urun values(4,1,'Multiways2',8,885)
-insert into urun values(5,1,'Greenways',16,816)
-insert into urun values(6,2,'Wintus2',4,1114)
-insert into urun values(7,2,'Transway',20,1370)
-insert into urun values(8,2,'Transway',28,1370)
+insert into urun values(1,1,'İceways2','195/60R1588F',24,815)
+insert into urun values(2,1,'Snowways4','195/60R1588H',12,763)
+insert into urun values(3,1,'Driveways','195/60R1588V',40,857)
+insert into urun values(4,1,'Multiways2','195/60R1588V',8,885)
+insert into urun values(5,1,'Greenways','195/60R1588H',16,816)
+insert into urun values(6,2,'Wintus2','195/60R16C99997T',4,1114)
+insert into urun values(7,2,'Transway','195/60R16C99997T',20,1370)
+insert into urun values(8,2,'Transway','195/60R16C99997T',28,1370)
 -------------------------------------------------------------------------------------------
 select * from urun
-insert into urun values (9,2,'Multiways-2',8,1162)
-insert into urun values (10,2,'Maxiways100S',16,2195)
-insert into urun values (11,2,'L/M400S',20,2325)
-insert into urun values (12,2,'Maxiways110D',8,2305)
-insert into urun values (13,3,'EG300S',4,4565)
-insert into urun values (14,3,'EG310S',40,5280)
-insert into urun values (15,3,'EG510S',20,5760)
-insert into urun values (16,3,'E550',16,5580)
-insert into urun values (17,3,'EG510D',12,5995)
-insert into urun values (18,3,'ENERGIA320D',24,5580)
-insert into urun values (19,3,'EG520D',20,6240)
-insert into urun values (20,3,'ENERGIA7500+',4,6325)
-insert into urun values (21,3,'ENERGIA330D',8,6310)
-insert into urun values (22,3,'EG520S',8,6000)
-insert into urun values (23,4,'AGRI1',4,4564)
-insert into urun values (24,4,'AGRI2',8,3879)
-insert into urun values (25,4,'AGRI3',16,4295)
-insert into urun values (26,4,'AGRI4',4,9449)
-insert into urun values (27,4,'AGRI5',12,8682)
-insert into urun values (28,4,'TK68',24,594)
-insert into urun values (29,4,'TK69',20,620)
-insert into urun values (30,4,'TK70',16,594)
-insert into urun values (31,4,'TK71',12,620)
-insert into urun values (32,4,'TK72',12,640)
+insert into urun values (9,2,'Multiways-2','195/70R15C1041022',8,1162)
+insert into urun values (10,2,'Maxiways100S','215/75R17,5',16,2195)
+insert into urun values (11,2,'L/M400S','215/75R17,5',20,2325)
+insert into urun values (12,2,'Maxiways110D','215/75R17,5',8,2305)
+insert into urun values (13,3,'EG300S','285/70R19,5',4,4565)
+insert into urun values (14,3,'EG310S','295/80R22,5',40,5280)
+insert into urun values (15,3,'EG510S','295/80R22,5',20,5760)
+insert into urun values (16,3,'E550','295/80R22,5',16,5580)
+insert into urun values (17,3,'EG510D','295/80R22,5',12,5995)
+insert into urun values (18,3,'ENERGIA320D','295/80R22,5',24,5580)
+insert into urun values (19,3,'EG520D','315/80R22,5',20,6240)
+insert into urun values (20,3,'ENERGIA7500+','315/80R22,5',4,6325)
+insert into urun values (21,3,'ENERGIA330D','315/80R22,5',8,6310)
+insert into urun values (22,3,'EG520S','315/80R22,5',8,6000)
+insert into urun values (23,4,'AGRI1','360/70R28',4,4564)
+insert into urun values (24,4,'AGRI2','360/70R24',8,3879)
+insert into urun values (25,4,'AGRI3','360/70R20',16,4295)
+insert into urun values (26,4,'AGRI4','480/70R24',4,9449)
+insert into urun values (27,4,'AGRI5','480/70R24',12,8682)
+insert into urun values (28,4,'TK68','5,50-166HR',24,594)
+insert into urun values (29,4,'TK69','5,50-1682R',20,620)
+insert into urun values (30,4,'TK70','5,50-168R',16,594)
+insert into urun values (31,4,'TK71','5,50-166R',12,620)
+insert into urun values (32,4,'TK72','5,60-166R',12,640)
 select * from personel
 --personel
 insert into personel values (200603,'Ahmet','Doğan',3615687,'Yogunağaç köyü 21,23602 Karkoçan/İstanbul')
@@ -220,3 +216,4 @@ insert into satisdetay values (12,4,210115,12,10,'16kas')
 ---------------------------------------------------------------------------------
 --yonetici
 select * from yonetici
+insert into yonetici values (1,'Oğuzhan','Çelik',552599384,'WgB_U@|KWGDf50pG?_=mbG(IP@')
