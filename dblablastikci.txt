@@ -1,219 +1,217 @@
 create table urunkategori(
-	kategoriid serial primary key not null,--serial ekle
+	kategoriid int primary key not null,
 	kategoriadi varchar(30),
-	ketegoriyegiristarihi int
-)
+	ketegoriyegiristarihi date
+);
 create table urun(
-	urunid serial primary key not null,--serial ekle
+	urunid int primary key not null,
 	kategoriid int references urunkategori(kategoriid),
 	urunadi varchar(50),
 	olcu varchar(50),
 	stok int,
 	fiyat int
-)
+);
 create table personel(
-	personelid int primary key not null,--serial eklemedik tarihe göre atadık
+	personelid int primary key not null,
 	personeladi varchar(20),
 	personelsoyadi varchar(20),
-	personeltlf int,
+	personeltlf varchar(13),
 	personeladres varchar(200)
-)
+);
 create table musteri(
-	musteriid serial primary key not null,
+	musteriid int primary key not null,
 	musteriadi varchar(20),
 	musterisoyadi varchar(20),
-	musteritlf int,
+	musteritlf varchar(13),
 	musteriadres varchar(200)
-)
+);
 create table satis(
-	satisid serial primary key not null,
+	satisid int primary key not null,
 	musteriid int references musteri(musteriid),
 	personelid int references personel(personelid)
-)
+);
 create table sepet(
-	sepetid serial primary key not null,
+	sepetid int primary key not null,
 	urunid int references urun(urunid),
 	sepetadi varchar(20)
-)
+);
 create table sepetdetay(
-	sepetdetayid serial primary key not null,
+	sepetdetayid int primary key not null,
 	sepetid int references sepet(sepetid),
 	sepeteekleme boolean,
 	sepettencikarma boolean
-)
+);
 create table personeldetay(
-	personeldetayid serial primary key not null,
+	personeldetayid int primary key not null,
 	personelid int references personel(personelid),
 	vardiya varchar(5),
 	satissayisi int
-)
+);
 create table satisdetay(
-	satisdetayid serial primary key not null,
+	satisdetayid int primary key not null,
 	urunid int references urun(urunid),
 	personelid int references personel(personelid),
 	satisid int references satis(satisid),
 	musteriid int references musteri(musteriid),
-	satistarihi varchar(5)	
-)
+	satistarihi date	
+);
 create table yonetici(
-	yoneticiid serial primary key not null,
+	yoneticiid int primary key not null,
+	personelid int references personel(personelid),
 	yoneticiadi varchar(20),
 	yoneticisoyadi varchar(20),
-	yoneticitlf int,
+	yoneticitlf varchar(13),
 	yoneticisifre varchar(32)
-)
-select * from urunkategori  --1
-select * from urun  --2
-select * from personel  --3
-select * from satisdetay  --4
-select * from personeldetay  --5
-select * from musteri  --6
-select * from sepet  --7
-select * from sepetdetay  --8
-select * from yonetici  --9
-select * from satis  --10
-
+);
+--select * from urunkategori  --1
+--select * from urun  --2
+--select * from personel  --3
+--select * from satisdetay  --4
+--select * from personeldetay  --5
+--select * from musteri  --6
+--select * from sepet  --7
+--select * from sepetdetay  --8
+--select * from yonetici  --9
+--select * from satis  --10
+------------------------------------------------
 --urun kategori-------------------
-insert into urunkategori values(1,'Binek',2019)
-insert into urunkategori values(2,'Hafif Ticari',2018)
-insert into urunkategori values(3,'Ağır Vasıta',2019)
-insert into urunkategori values(4,'Traktör',2021)
-insert into urunkategori values(5,'Motorsiklet',2020)
-insert into urunkategori values(6,'Kriko',2020)
-
+insert into urunkategori values(1,'Binek','2019-06-08');
+insert into urunkategori values(2,'Hafif Ticari','2018-05-14');
+insert into urunkategori values(3,'Ağır Vasıta','2019-07-23');
+insert into urunkategori values(4,'Traktör','2021-01-01');
+insert into urunkategori values(5,'Motorsiklet','2020-09-07');
+insert into urunkategori values(6,'Kriko','2020-12-30');
+-------------------------------------------------------------------
 --urun------------------------
-insert into urun values(1,1,'İceways2','195/60R1588F',24,815)
-insert into urun values(2,1,'Snowways4','195/60R1588H',12,763)
-insert into urun values(3,1,'Driveways','195/60R1588V',40,857)
-insert into urun values(4,1,'Multiways2','195/60R1588V',8,885)
-insert into urun values(5,1,'Greenways','195/60R1588H',16,816)
-insert into urun values(6,2,'Wintus2','195/60R16C99997T',4,1114)
-insert into urun values(7,2,'Transway','195/60R16C99997T',20,1370)
-insert into urun values(8,2,'Transway','195/60R16C99997T',28,1370)
--------------------------------------------------------------------------------------------
-select * from urun
-insert into urun values (9,2,'Multiways-2','195/70R15C1041022',8,1162)
-insert into urun values (10,2,'Maxiways100S','215/75R17,5',16,2195)
-insert into urun values (11,2,'L/M400S','215/75R17,5',20,2325)
-insert into urun values (12,2,'Maxiways110D','215/75R17,5',8,2305)
-insert into urun values (13,3,'EG300S','285/70R19,5',4,4565)
-insert into urun values (14,3,'EG310S','295/80R22,5',40,5280)
-insert into urun values (15,3,'EG510S','295/80R22,5',20,5760)
-insert into urun values (16,3,'E550','295/80R22,5',16,5580)
-insert into urun values (17,3,'EG510D','295/80R22,5',12,5995)
-insert into urun values (18,3,'ENERGIA320D','295/80R22,5',24,5580)
-insert into urun values (19,3,'EG520D','315/80R22,5',20,6240)
-insert into urun values (20,3,'ENERGIA7500+','315/80R22,5',4,6325)
-insert into urun values (21,3,'ENERGIA330D','315/80R22,5',8,6310)
-insert into urun values (22,3,'EG520S','315/80R22,5',8,6000)
-insert into urun values (23,4,'AGRI1','360/70R28',4,4564)
-insert into urun values (24,4,'AGRI2','360/70R24',8,3879)
-insert into urun values (25,4,'AGRI3','360/70R20',16,4295)
-insert into urun values (26,4,'AGRI4','480/70R24',4,9449)
-insert into urun values (27,4,'AGRI5','480/70R24',12,8682)
-insert into urun values (28,4,'TK68','5,50-166HR',24,594)
-insert into urun values (29,4,'TK69','5,50-1682R',20,620)
-insert into urun values (30,4,'TK70','5,50-168R',16,594)
-insert into urun values (31,4,'TK71','5,50-166R',12,620)
-insert into urun values (32,4,'TK72','5,60-166R',12,640)
-select * from personel
+
+insert into urun values(1,1,'İceways2','195/60R1588F',24,815);
+insert into urun values(2,1,'Snowways4','195/60R1588H',12,763);
+insert into urun values(3,1,'Driveways','195/60R1588V',40,857);
+insert into urun values(4,1,'Multiways2','195/60R1588V',8,885);
+insert into urun values(5,1,'Greenways','195/60R1588H',16,816);
+insert into urun values(6,2,'Wintus2','195/60R16C99997T',4,1114);
+insert into urun values(7,2,'Transway','195/60R16C99997T',20,1370);
+insert into urun values(8,2,'Transway','195/60R16C99997T',28,1370);
+insert into urun values (9,2,'Multiways-2','195/70R15C1041022',8,1162);
+insert into urun values (10,2,'Maxiways100S','215/75R17,5',16,2195);
+insert into urun values (11,2,'L/M400S','215/75R17,5',20,2325);
+insert into urun values (12,2,'Maxiways110D','215/75R17,5',8,2305);
+insert into urun values (13,3,'EG300S','285/70R19,5',4,4565);
+insert into urun values (14,3,'EG310S','295/80R22,5',40,5280);
+insert into urun values (15,3,'EG510S','295/80R22,5',20,5760);
+insert into urun values (16,3,'E550','295/80R22,5',16,5580);
+insert into urun values (17,3,'EG510D','295/80R22,5',12,5995);
+insert into urun values (18,3,'ENERGIA320D','295/80R22,5',24,5580);
+insert into urun values (19,3,'EG520D','315/80R22,5',20,6240);
+insert into urun values (20,3,'ENERGIA7500+','315/80R22,5',4,6325);
+insert into urun values (21,3,'ENERGIA330D','315/80R22,5',8,6310);
+insert into urun values (22,3,'EG520S','315/80R22,5',8,6000);
+insert into urun values (23,4,'AGRI1','360/70R28',4,4564);
+insert into urun values (24,4,'AGRI2','360/70R24',8,3879);
+insert into urun values (25,4,'AGRI3','360/70R20',16,4295);
+insert into urun values (26,4,'AGRI4','480/70R24',4,9449);
+insert into urun values (27,4,'AGRI5','480/70R24',12,8682);
+insert into urun values (28,4,'TK68','5,50-166HR',24,594);
+insert into urun values (29,4,'TK69','5,50-1682R',20,620);
+insert into urun values (30,4,'TK70','5,50-168R',16,594);
+insert into urun values (31,4,'TK71','5,50-166R',12,620);
+insert into urun values (32,4,'TK72','5,60-166R',12,640);
+-----------------------------------------------------------------------------------
 --personel
-insert into personel values (200603,'Ahmet','Doğan',3615687,'Yogunağaç köyü 21,23602 Karkoçan/İstanbul')
-insert into personel values (200812,'Zafer','Yılmaz',558-00-01,'Aşağıkaragöz 6,38700,Pınarbaşı/İstanbul')
-insert into personel values (210115,'Mehmet','Yıldırım',601-03-54,'Dere 20,57602,Gerze/İstanbul')
-insert into personel values (210218,'Can','Atak',425-90-59,'Konazköz 34,18502,Yıldızeli/İstanbul')
-insert into personel values (210723,'Kerim','Durmaz',425-90-59,'Dervişyol,35,24802,Tarcan/İstanbul')
-insert into personel values (210907,'Şahin','Çetin',281-60-66,'Ayanlar 10,45580,Gölmarmara/İstanbul')
-------------------------------------------------araverdim-------------------------------------------------
+insert into personel values (200603,'Ahmet','Doğan','552-361-56-87','Yogunağaç köyü 21,23602 Karkoçan/İstanbul');
+insert into personel values (200812,'Zafer','Yılmaz','545-558-00-01','Aşağıkaragöz 6,38700,Pınarbaşı/İstanbul');
+insert into personel values (210115,'Mehmet','Yıldırım','544-601-03-54','Dere 20,57602,Gerze/İstanbul');
+insert into personel values (210218,'Can','Atak','534-425-90-59','Konazköz 34,18502,Yıldızeli/İstanbul');
+insert into personel values (210723,'Kerim','Durmaz','532-425-90-59','Dervişyol,35,24802,Tarcan/İstanbul');
+insert into personel values (210907,'Şahin','Çetin','555-281-60-66','Ayanlar 10,45580,Gölmarmara/İstanbul');
+insert into personel values (180101,'Oğuzhan','Çelik','552-599-38-84','İnönü Üniversitesi Mühendislik Fakultesi');
+-------------------------------------------------------------------------------------------------
 --müşteri
-select * from musteri
-insert into musteri values (1,'Recep','Kaya',535235157,'Şair Ziya Paşa Cad. Akgün iş hanı No:37 D:12 Karaköy - İSTANBUL')
-insert into musteri values (2,'Burak','Çetin',532775172,'ATATURK MAH. İKİTELLİ CD. NO:54/A İKİTELLİ/İSTANBUL')
-insert into musteri values (3,'Selda','Aktaş',552716305,'Ayasofya, Cankurtaran, Ayasofya Meydanı, 34122, Fatih, İstanbul')
-insert into musteri values (4,'Yeşim', 'Şimşek',534510257,'Özel Zapyon Rum Lisesi, Katipmustafa Çelebi, Meşelik Sokak, 34433, Beyoğlu, İstanbul')
-insert into musteri values (5,'Nilgün','Kara',544891524,'Ahsap Cerceve Kukla, Katipmustafa Çelebi, Çukurlu Çeşme Sokak 12, 34433, Beyoğlu, İstanbul')
-insert into musteri values (6,'Bahar','Yavuz',537378408,'Kumbara, Katipmustafa Çelebi, Küçük Parmak Kapı Sokak, 34433, Beyoğlu, İstanbul')
-insert into musteri values (7,'Adem','Sarı',543887501,'Afm Spor, Katipmustafa Çelebi, İstiklal Caddesi, 34433, Beyoğlu, İstanbul')
-insert into musteri values (8,'Hasan','Çetin',552524217,'Bıçakçı Alaaddin Cami, İskenderpaşa, Molla Hüsrev Sokak 26, 34080, Fatih, İstanbul')
-insert into musteri values (9,'Ramazan','Bozkurt',534413686,'Gürsel Elektronik, İskenderpaşa, Sofular Caddesi, 34080, Fatih, İstanbul')
-insert into musteri values (10,'Abdullah','Kurt',532469039,'Visalli, İskenderpaşa, Yeşil Tekke Sokak, 34080, Fatih, İstanbul')
-insert into musteri values (11,'Mahmut','Özcan',544797608,'Aslı Pen, İskenderpaşa, Sofular Caddesi, 34080, Fatih, İstanbul')
-insert into musteri values (12,'Osman','Avcı',535831159,'Radisson Blu Hotel İstanbul Şişli, 19 Mayıs, 19 Mayıs Caddesi, 34363, Şişli, İstanbul')
-select * from musteri
+
+insert into musteri values (1,'Recep','Kaya','535-235-15-70','Şair Ziya Paşa Cad. Akgün iş hanı No:37 D:12 Karaköy - İSTANBUL');
+insert into musteri values (2,'Burak','Çetin','532-775-17-22','ATATURK MAH. İKİTELLİ CD. NO:54/A İKİTELLİ/İSTANBUL');
+insert into musteri values (3,'Selda','Aktaş','552-716-30-53','Ayasofya, Cankurtaran, Ayasofya Meydanı, 34122, Fatih, İstanbul');
+insert into musteri values (4,'Yeşim', 'Şimşek','534-510-25-77','Özel Zapyon Rum Lisesi, Katipmustafa Çelebi, Meşelik Sokak, 34433, Beyoğlu, İstanbul');
+insert into musteri values (5,'Nilgün','Kara','544-891-52-44','Ahsap Cerceve Kukla, Katipmustafa Çelebi, Çukurlu Çeşme Sokak 12, 34433, Beyoğlu, İstanbul');
+insert into musteri values (6,'Bahar','Yavuz','537-378-40-87','Kumbara, Katipmustafa Çelebi, Küçük Parmak Kapı Sokak, 34433, Beyoğlu, İstanbul');
+insert into musteri values (7,'Adem','Sarı','543-887-50-15','Afm Spor, Katipmustafa Çelebi, İstiklal Caddesi, 34433, Beyoğlu, İstanbul');
+insert into musteri values (8,'Hasan','Çetin','552-524-21-71','Bıçakçı Alaaddin Cami, İskenderpaşa, Molla Hüsrev Sokak 26, 34080, Fatih, İstanbul');
+insert into musteri values (9,'Ramazan','Bozkurt','534-413-68-68','Gürsel Elektronik, İskenderpaşa, Sofular Caddesi, 34080, Fatih, İstanbul');
+insert into musteri values (10,'Abdullah','Kurt','532-469-03-99','Visalli, İskenderpaşa, Yeşil Tekke Sokak, 34080, Fatih, İstanbul');
+insert into musteri values (11,'Mahmut','Özcan','544-797-60-85','Aslı Pen, İskenderpaşa, Sofular Caddesi, 34080, Fatih, İstanbul');
+insert into musteri values (12,'Osman','Avcı','535-831-15-93','Radisson Blu Hotel İstanbul Şişli, 19 Mayıs, 19 Mayıs Caddesi, 34363, Şişli, İstanbul');
+
 ------------------------------------------------------------------------------------------------------------------------------------------------
 
 --satış
-select * from satis
-insert into satis values (1,3,200603)
-insert into satis values (2,5,200603)
-insert into satis values (3,7,210907)
-insert into satis values (4,11,210907)
-insert into satis values (5,12,200812)
-insert into satis values (6,1,200812)
-insert into satis values (7,4,210723)
-insert into satis values (8,2,210723)
-insert into satis values (9,6,210218)
-insert into satis values (10,8,210218)
-insert into satis values (11,9,210115)
-insert into satis values (12,10,210115)
-select * from satis
+
+insert into satis values (1,3,200603);
+insert into satis values (2,5,200603);
+insert into satis values (3,7,210907);
+insert into satis values (4,11,210907);
+insert into satis values (5,12,200812);
+insert into satis values (6,1,200812);
+insert into satis values (7,4,210723);
+insert into satis values (8,2,210723);
+insert into satis values (9,6,210218);
+insert into satis values (10,8,210218);
+insert into satis values (11,9,210115);
+insert into satis values (12,10,210115);
+
 -------------------------------------------------------------------------------------------------------------------------------------------------
 
 --sepet
-select * from sepet
-insert into sepet values (1,7,'06KB848')
-insert into sepet values (2,13,'06ZB182')
-insert into sepet values (3,30,'06AY6651')
-insert into sepet values (4,25,'01AB243')
-insert into sepet values (5,23,'34AZY090')
-insert into sepet values (6,11,'34AES996')
-insert into sepet values (7,2,'34TES1192')
-insert into sepet values (8,9,'34EF8048')
-insert into sepet values (9,17,'44AC6640')
-insert into sepet values (10,28,'22BR375')
-insert into sepet values (11,29,'11İU486')
-insert into sepet values (12,4,'12FU978')
-select * from sepet
--------------------------------------------------------------------------------------------------------------------------------------------------
 
-select * from sepetdetay
-insert into sepetdetay values (1,1,'TRUE')
-insert into sepetdetay values (2,2,'TRUE')
-insert into sepetdetay values (3,3,'TRUE')
-insert into sepetdetay values (4,4,'TRUE')
-insert into sepetdetay values (5,5,'TRUE')
-insert into sepetdetay values (6,6,'TRUE')
-insert into sepetdetay values (7,7,'TRUE')
-insert into sepetdetay values (8,8,'TRUE')
-insert into sepetdetay values (9,9,'TRUE')
-insert into sepetdetay values (10,10,'TRUE')
-insert into sepetdetay values (11,11,'TRUE')
-insert into sepetdetay values (12,12,'TRUE')
+insert into sepet values (1,7,'06KB848');
+insert into sepet values (2,13,'06ZB182');
+insert into sepet values (3,30,'06AY6651');
+insert into sepet values (4,25,'01AB243');
+insert into sepet values (5,23,'34AZY090');
+insert into sepet values (6,11,'34AES996');
+insert into sepet values (7,2,'34TES1192');
+insert into sepet values (8,9,'34EF8048');
+insert into sepet values (9,17,'44AC6640');
+insert into sepet values (10,28,'22BR375');
+insert into sepet values (11,29,'11İU486');
+insert into sepet values (12,4,'12FU978');
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+--sepetdetay
+insert into sepetdetay values (1,1,'TRUE');
+insert into sepetdetay values (2,2,'TRUE');
+insert into sepetdetay values (3,3,'TRUE');
+insert into sepetdetay values (4,4,'TRUE');
+insert into sepetdetay values (5,5,'TRUE');
+insert into sepetdetay values (6,6,'TRUE');
+insert into sepetdetay values (7,7,'TRUE');
+insert into sepetdetay values (8,8,'TRUE');
+insert into sepetdetay values (9,9,'TRUE');
+insert into sepetdetay values (10,10,'TRUE');
+insert into sepetdetay values (11,11,'TRUE');
+insert into sepetdetay values (12,12,'TRUE');
 -----------------------------------------------------------
 --personeldetay
-select * from personeldetay
-insert into personeldetay values (1,200603,'08-16',2)
-insert into personeldetay values (2,200812,'08-16',2)
-insert into personeldetay values (3,210115,'16-24',2)
-insert into personeldetay values (4,210218,'16-24',2)
-insert into personeldetay values (5,210723,'24-08',2)
-insert into personeldetay values (6,210907,'24-08',2)
+insert into personeldetay values (1,200603,'08-16',2);
+insert into personeldetay values (2,200812,'08-16',2);
+insert into personeldetay values (3,210115,'16-24',2);
+insert into personeldetay values (4,210218,'16-24',2);
+insert into personeldetay values (5,210723,'24-08',2);
+insert into personeldetay values (6,210907,'24-08',2);
+insert into personeldetay values (7,180101,'07/24');
 -----------------------------------------------------------------
 --satisdetay
-select * from satisdetay
-insert into satisdetay values (1,7,200603,1,3,'16kas')
-insert into satisdetay values (2,13,200603,2,5,'19kas')
-insert into satisdetay values (3,30,210907,3,7,'20kas')
-insert into satisdetay values (4,25,210907,4,11,'20kas')
-insert into satisdetay values (5,23,200812,5,12,'15kas')
-insert into satisdetay values (6,11,200812,6,1,'15kas')
-insert into satisdetay values (7,2,210723,7,4,'17kas')
-insert into satisdetay values (8,9,210723,8,2,'18kas')
-insert into satisdetay values (9,17,210218,9,6,'21kas')
-insert into satisdetay values (10,28,210218,10,8,'20kas')
-insert into satisdetay values (11,29,210115,11,9,'21kas')
-insert into satisdetay values (12,4,210115,12,10,'16kas')
+insert into satisdetay values (1,7,200603,1,3,'2021-11-16');
+insert into satisdetay values (2,13,200603,2,5,'2021-11-19');
+insert into satisdetay values (3,30,210907,3,7,'2021-11-20');
+insert into satisdetay values (4,25,210907,4,11,'2021-11-20');
+insert into satisdetay values (5,23,200812,5,12,'2021-11-15');
+insert into satisdetay values (6,11,200812,6,1,'2021-11-15');
+insert into satisdetay values (7,2,210723,7,4,'2021-11-17');
+insert into satisdetay values (8,9,210723,8,2,'2021-11-18');
+insert into satisdetay values (9,17,210218,9,6,'2021-11-21');
+insert into satisdetay values (10,28,210218,10,8,'2021-11-20');
+insert into satisdetay values (11,29,210115,11,9,'2021-11-21');
+insert into satisdetay values (12,4,210115,12,10,'2021-11-20');
 ---------------------------------------------------------------------------------
 --yonetici
-select * from yonetici
-insert into yonetici values (1,'Oğuzhan','Çelik',552599384,'WgB_U@|KWGDf50pG?_=mbG(IP@')
+insert into yonetici values (1,180101,'Oğuzhan','Çelik',552599384,'WgB_U@|KWGDf50pG?_=mbG(IP@')

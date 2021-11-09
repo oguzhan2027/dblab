@@ -1,0 +1,8 @@
+select  kategoriadi,urunadi, p.personeladi ,sd.satistarihi,urun.fiyat,s.satisid,m.musteriadi from 
+urun inner join urunkategori
+on urun.kategoriid=urunkategori.kategoriid
+inner join satisdetay sd on urun.urunid=sd.urunid
+inner join personel p on p.personelid=sd.personelid
+inner join satis s on s.satisid=sd.satisid
+inner join musteri m on m.musteriid=sd.musteriid
+order by musteriadi desc
