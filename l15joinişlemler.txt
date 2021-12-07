@@ -1,0 +1,23 @@
+select * from dersler cross join ogrenci;
+select * from dersler d inner join ogrenci o on o.ogrencino=d.ogrencino
+
+select * from ogrenci o inner join dersler d on o.ogrencino=d.ogrencino;
+select d.ogrencino,d.derskodu,o.isim,o.yas from dersler d inner join ogrenci o on o.ogrencino=d.ogrencino;
+select * from dersler d left join ogrenci o on o.ogrencino=d.ogrencino;
+select * from ogrenci o left join dersler d on o.ogrencino=d.ogrencino;
+select * from ogrenci o right join dersler d on o.ogrencino=d.ogrencino;
+select * from dersler d right join ogrenci o on o.ogrencino=d.ogrencino;
+select * from dersler d full join ogrenci o on o.ogrencino=d.ogrencino;
+select * from ogrenci o full join dersler d on o.ogrencino=d.ogrencino;
+select * from dersler d natural join ogrenci;
+select * from dersler d natural inner join ogrenci;
+select * from dersler d natural left join ogrenci;
+select * from dersler d natural right join ogrenci;
+---------------------------------------------------
+
+
+
+
+
+
+
